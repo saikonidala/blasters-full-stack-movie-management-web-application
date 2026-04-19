@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(22, 19, 19);
+            font-family: Arial, sans-serif;
+        }
+        label {
+            color: white;
+        }
+        input {
+            width: 60%;
+            padding: 5px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+        .result {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .movie-card {
+            text-align: center;
+            color: white;
+        }
+        .movie-card img {
+            width: 200px;
+            height:200px;
+            border-radius: 5px;
+        }
+        .info{
+            align-content: center;
+        }
+        body{
+    background-color: rgb(22, 19, 19);
+}
+#logo{
+    border-radius: 50%;
+    border-right: 3px solid rgb(211, 41, 41);
+    border-left: 3px solid rgb(211, 41, 41);
+    background-color: #d9f11f;
+    width: 100px;
+    height: 100px;
+    padding:10px;
+}
+li a{
+    color: black;
+}
+li{
+    text-decoration: none;
+    list-style: none;
+    border: 1.5px solid rgb(103, 96, 96);
+    padding: 2px;
+    border-radius: 20px;
+    background-color: rgb(187 232 237);
+    margin: auto;
+    padding:5px;
+}
+ul{
+    display: flex;
+    gap:20px;
+}
+#navigations{
+       align-content: center;
+}
+#nav{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background:linear-gradient(120deg,white 10%,#43650c 100%);
+} 
+li:hover{
+    color: white;
+    background-color: rgb(195, 195, 63);
+} 
+img{
+    height: 200px;
+    width: 100px;
+}
+h1,a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: blue;
+}
+select{
+    padding:5px;
+}
+    </style>
+</head>
+<body>
+     <div id="nav">
+        <div >
+            <img id="logo" src="../images/blasters.png" alt="">
+        </div>
+        <div id="navigations">
+             <ul>
+                  <li> <a href="add.html">ADD</a></li>
+                  <li><a href="search.html">SEARCH</a></li>
+                  <li><a href="delete.html">DELETE</a></li>
+                  <li><a href="update.html">UPDATE</a></li>
+                  <li><a href="home.html">HOME</a></li>
+             </ul>
+        </div>
+    </div><br>
+    <div>
+  <center>
+    <form onsubmit="allmovies(event)">
+      <select id="genre" required>
+        <option value="">...Select Genre...</option>
+        <option value="Tollywood">Tollywood</option>
+        <option value="Bollywood">Bollywood</option>
+        <option value="Kollywood">Kollywood</option>
+        <option value="Marvels">Marvels</option>
+        <option value="Web Series">Web Series</option>
+      </select>
+      <button type="submit">See all</button>
+    </form>
+  </center>
+</div>
+
+<div class="result"></div><br>br
+<br><br><br>
+<script>
+  async function allmovies(e) {
+    e.preventDefault();
+
+    const movies = document.getElementById("genre").value;
+    const output = document.querySelector(".result");
+
+    try {
+      const resp = await fetch(`http://localhost:3000/searchall?genre=${encodeURIComponent(movies)}`);
+      const data = await resp.json();
+
+      console.log("Data received:", data);
+
+      output.innerHTML = "";
+
+      if (!Array.isArray(data) || data.length === 0) {
+        output.innerHTML = "<h3 style='color:white'>No Data Found</h3>";
+      } else {
+        for (let movie of data) {
+          output.innerHTML += `
+            <div class="movie-card">  
+              <img src="${movie.image}" alt="${movie.movie_name}" style="width:250px; height:250px;">
+              <p style="color:white">${movie.movie_name}</p>
+            </div>
+          `;
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      output.innerHTML = "<h3 style='color:white'>Error fetching data</h3>";
+    }
+  }
+</script>
+</body>
+</html>

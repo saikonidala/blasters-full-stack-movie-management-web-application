@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 10%;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #32b7d3ed, #f1a881fc);
+        }
+        .register{
+            background: linear-gradient(45deg, #f1a881fc, #32b7d3ed);
+            border-radius: 20px;
+            padding: 20px;
+        } 
+        input{
+        width: 60%;
+            height: 30px;
+            border-radius: 20px;
+            word-spacing: 1px;
+            border: none;
+            padding: 4px;
+        }
+        button{
+            height:30px;
+            border-radius: 20px;
+            border: none;
+            border-radius: 20px;
+            padding: 20px;
+            padding: 6px;
+            word-spacing: 1px;
+            background: linear-gradient(#f1a881fc, #32b7d3ed);
+        }
+        button:hover,input:hover{
+            box-shadow: 0px 0px 9px 6px #383433;
+            border: none;
+            transition: 0.5s;
+        }
+        .register:hover{
+            box-shadow: 0px 0px 9px 6px #383433;
+            transition: 0.5s;
+        }
+        #error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="register"> 
+        <center> 
+            <h1>REGISTER FORM</h1>
+            <form id="registration">
+                <input type="text" placeholder="username"  id="uname"><br><br>
+                <input type="email" placeholder="email"  id="email"><br><br>
+                <input type="password" placeholder="password"  id="password"><br><br>
+                <input type="password" placeholder="Retype-password"  id="checkpassword"><br><br>
+                <button id="signin" type="submit">Register</button>
+                <p id="error"></p>
+            </form>
+        </center>
+    </div>
+    <script>
+        var username=document.getElementById("uname");
+        var email=document.getElementById("email");
+        var password=document.getElementById("password");
+        var cpassword=document.getElementById("checkpassword");
+        var button=document.getElementById("signin");8
+        var error=document.querySelector("#error");
+
+        const form=document.getElementById("registration") 
+        form.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+            if(!username.value||!email.value||!password.value||!cpassword.value){
+                error.innerText="All fields required";
+            }
+            else if(username.value.length<5){
+                error.innerText="User name contain atleast 5 characters";
+            }
+            else if(password.value.length<6){
+                error.innerText="Password contains atleast 6 characters";
+            }
+            else if(password.value != cpassword.value){
+                error.innerText="password not matched"
+            }
+            else{
+                const obj={
+                    username:username.value,
+                    email:email.value,
+                    password:password.value
+                }
+                const resp = await fetch("http://localhost:3000/home",{
+                    method:'POST',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(obj)
+                })
+                console.log(resp.status)
+                const data=await resp.json();
+                if(resp.status==409){
+                    alert(data.message)
+                }
+                if(resp.status==200){
+                    alert(data.message)
+                    window.location.href="index.html"
+                }
+            
+            }
+        })
+  
+    </script>
+</body>
+</html>

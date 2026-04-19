@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+    background-color: rgb(22, 19, 19);
+}
+#logo{
+    border-radius: 50%;
+    border-right: 3px solid rgb(211, 41, 41);
+    border-left: 3px solid rgb(211, 41, 41);
+    background-color: #d9f11f;
+    width: 100px;
+    height: 100px;
+    padding:10px;
+}
+li a{
+    color: black;
+}
+li{
+    text-decoration: none;
+    list-style: none;
+    border: 1.5px solid rgb(103, 96, 96);
+    padding: 2px;
+    border-radius: 20px;
+    background-color: rgb(187 232 237);
+    margin: auto;
+    padding:5px;
+}
+ul{
+    display: flex;
+    gap:20px;
+}
+#navigations{
+       align-content: center;
+}
+#nav{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background:linear-gradient(120deg,white 10%,#43650c 100%);
+} 
+li:hover{
+    color: white;
+    background-color: rgb(195, 195, 63);
+} 
+img{
+    height: 200px;
+    width: 100px;
+}
+h1,a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: blue;
+}
+.dform{
+    background-color: #39c4b699;
+    border-radius: 20px;
+    padding: 5px;
+}
+p{
+    color:gold;
+}
+button{
+    padding: 5px;
+    background-color: #f14d1fab;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+button:hover{
+    background-color: rgb(245, 21, 21);
+}
+input{
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+}
+    </style>
+</head>
+<body>
+     <div id="nav">
+        <div >
+            <img id="logo" src="../images/blasters.png" alt="">
+        </div>
+        <div id="navigations">
+             <ul>
+                  <li> <a href="add.html">ADD</a></li>
+                  <li><a href="search.html">SEARCH</a></li>
+                  <li><a href="delete.html">DELETE</a></li>
+                  <li><a href="update.html">UPDATE</a></li>
+                  <li><a href="home.html">HOME</a></li>
+             </ul>
+        </div>
+    </div><br>
+    <div class="dform">
+        <center>
+                <h1>DELETE PAGE</h1><br>
+            <form action="" id="delete">
+                <input type="text" id="deleteform" placeholder="Enter Movie Name" required><br><br>
+                <button>DELETE</button><br><br>
+                <p>NOTE: please enter the correct movie name.mistakes can causes to wrong movie deletion.</p>
+            </form>
+    </center>
+</div><br>
+<script>
+    let input=document.getElementById("deleteform");
+    let del=document.getElementById("delete");
+    del.addEventListener("submit",async (e)=>{
+        e.preventDefault();
+        const value=input.value.trim();
+        if(!value){
+            alert("Enter movie name");
+        }
+        console.log(value);
+        const obj={
+            value:input.value
+        }
+        const resp=await fetch("//localhost:3000/delete",{
+            method:'DELETE',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                 
+                    body:JSON.stringify(obj)
+        })
+        const data= await resp.json();
+        console.log("console:",data)
+        if(resp.status==200){
+            alert(data.message)
+        }
+        else{
+            alert(data.message)
+        }
+    });
+</script>
+</body>
+</html>

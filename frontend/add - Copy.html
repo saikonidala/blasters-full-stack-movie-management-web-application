@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+    background-color: rgb(22, 19, 19);
+}
+#logo{
+    border-radius: 50%;
+    border-right: 3px solid rgb(211, 41, 41);
+    border-left: 3px solid rgb(211, 41, 41);
+    background-color: #d9f11f;
+    width: 100px;
+    height: 100px;
+    padding:10px;
+}
+li a{
+    color: black;
+}
+li{
+    text-decoration: none;
+    list-style: none;
+    border: 1.5px solid rgb(103, 96, 96);
+    padding: 2px;
+    border-radius: 20px;
+    background-color: rgb(187 232 237);
+    margin: auto;
+    padding:5px;
+}
+ul{
+    display: flex;
+    gap:20px;
+}
+#navigations{
+       align-content: center;
+}
+#nav{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background:linear-gradient(120deg,white 10%,#43650c 100%);
+} 
+li:hover{
+    color: white;
+    background-color: rgb(195, 195, 63);
+} 
+img{
+    height: 200px;
+    width: 100px;
+}
+h1,a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: blue;
+}
+input{
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+}
+button{
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #49e74f;
+    border: none;
+    letter-spacing: 1px;
+}
+.addform{
+    background-color: #96e5e4d6;
+    border-radius: 20px;
+    padding: 5px;
+}
+select{
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+}
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <div >
+            <img id="logo" src="../images/blasters.png" alt="">
+        </div>
+        <div id="navigations">
+             <ul>
+                  <li> <a href="add.html">ADD</a></li>
+                  <li><a href="search.html">SEARCH</a></li>
+                  <li><a href="delete.html">DELETE</a></li>
+                  <li><a href="update.html">UPDATE</a></li>
+                  <li><a href="home.html">HOME</a></li>
+             </ul>
+        </div>
+    </div><br>
+    <div class="addform">
+        <center>
+            <h1>ADD YOUR MOVIE</h1><br>
+            <form action="" id="addmovie">
+                <label for="">Movie Name:</label><br><br>
+                <input type="text" id="mname" placeholder="Enter Moie Name" required><br><br>
+                <label for="">genre :</label><br><br>
+                <select id="genre" placeholder="...Select Gengre..." required>
+                    <option value=>...Select Gengre...</option>
+                    <option value="Tollywood">Tollywood</option>
+                    <option value="Bollywood">Bollywood</option>
+                    <option value="Kollywood">Kollywood</option>
+                    <option value="Marvels">Marvels</option>
+                    <option value="Web Series">Web Series</option>
+                </select><br><br>
+                <label for="">Image Poster :</label><br><br>
+                <input type="text" id="moviep" placeholder="Enter Movie Poster URL" required><br><br>
+                <button>ADD</button>
+            </form>
+        </center>
+    </div>
+    <script>
+        let mname=document.getElementById("mname");
+        let genre=document.getElementById("genre");
+        let poster=document.getElementById("moviep");
+        let addmovie=document.getElementById("addmovie");
+
+        addmovie.addEventListener("submit",async (e)=>{
+            e.preventDefault();
+           let moviename=mname.value.trim();
+           let genre1=genre.value.trim();
+           let mposter=poster.value.trim();
+            if(!moviename||!genre1||!mposter){
+                alert("Enter All Correct Details..");
+                return;
+            }
+            console.log(moviename)
+            console.log(genre1)
+            console.log(mposter)
+            const obj={
+                moviename:moviename,
+                genre1:genre1,
+                mposter:mposter
+            }
+            const resp = await fetch("http://localhost:3000/addmovies",{
+                    method:'POST',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(obj)
+                })
+                const data=await resp.json();
+                if(data.status==200){
+                    alert(data.message);
+                }else{
+                    alert(data.message);
+                }
+        })
+    </script>
+    
+</body>
+</html>

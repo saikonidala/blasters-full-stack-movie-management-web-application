@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+ body{
+    background-color: rgb(22, 19, 19);
+}
+#logo{
+    border-radius: 50%;
+    border-right: 3px solid rgb(211, 41, 41);
+    border-left: 3px solid rgb(211, 41, 41);
+    background-color: #d9f11f;
+    width: 100px;
+    height: 100px;
+    padding:10px;
+}
+li a{
+    color: black;
+}
+li{
+    text-decoration: none;
+    list-style: none;
+    border: 1.5px solid rgb(103, 96, 96);
+    padding: 2px;
+    border-radius: 20px;
+    background-color: rgb(187 232 237);
+    margin: auto;
+    padding:5px;
+}
+ul{
+    display: flex;
+    gap:20px;
+}
+#navigations{
+       align-content: center;
+}
+#nav{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background:linear-gradient(120deg,white 10%,#43650c 100%);
+} 
+li:hover{
+    color: white;
+    background-color: rgb(195, 195, 63);
+} 
+img{
+    height: 200px;
+    width: 100px;
+}
+h1,a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: blue;
+}
+.uform{
+    background-color: #39c4b699;
+    border-radius: 20px;
+    padding: 5px;
+}
+button{
+    padding: 5px;
+    background-color: #f14d1fab;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+button:hover{
+    background-color: rgb(245, 21, 21);
+}
+input{
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+}
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <div >
+            <img id="logo" src="../images/blasters.png" alt="">
+        </div>
+        <div id="navigations">
+             <ul>
+                  <li> <a href="add.html">ADD</a></li>
+                  <li><a href="search.html">SEARCH</a></li>
+                  <li><a href="delete.html">DELETE</a></li>
+                  <li><a href="update.html">UPDATE</a></li>
+                  <li><a href="home.html">HOME</a></li>
+             </ul>
+        </div>
+    </div><br>
+    <div class="uform">
+        <center>
+                <h1>UPDATE MOVIE NAME</h1><br>
+            <form action="" id="updatename">
+                <label for="">FROM</label><br><br>
+                <input type="text" id="moviename" placeholder="Enter Movie Name" required><br><br>
+                <label for="">TO</label><br><br>
+                <input type="text" id="updatename1" placeholder="Enter Movie Name for update" required><br><br>
+                <button>UPDATE</button><br><br>
+            </form>
+    </center>
+</div><br><br>
+ <div class="uform">
+        <center>
+                <h1>UPDATE MOVIE POSTER</h1><br>
+            <form action="" id="updateposter">
+                <label for="">FROM</label><br><br>
+                <input type="text" id="pmoviename" placeholder="Enter Movie Name" required><br><br>
+                <label for="">POSTER</label><br><br>
+                <input type="text" id="updateposter1" placeholder="Enter Movie Poster url" required><br><br>
+                <button>UPDATE</button><br><br>
+            </form>
+    </center>
+</div>
+<br>
+<script>
+    let input=document.getElementById("updatename1");
+    let moviename=document.getElementById("moviename");
+    let upd=document.getElementById("updatename");
+    upd.addEventListener("submit",async (e)=>{
+        e.preventDefault();
+        const upname=input.value.trim();
+        const movienamef=moviename.value.trim();
+        if(!upd || !movienamef){
+            alert("Enter movie name");
+            return;
+        }
+        console.log(upname);
+        console.log(movienamef);
+        const obj={
+            movienamef:movienamef,
+            upname:upname
+        }
+        const resp=await fetch("http://localhost:3000/updatemoviename",{
+            method:'PATCH',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                 
+                    body:JSON.stringify(obj)
+        })
+        const data=await resp.json();
+        if(data.status==200){
+            alert(data.message)
+        }else{
+            alert(data.message)
+        }
+
+    })
+    //for poster update
+    let pinput=document.getElementById("updateposter1");
+    let pomoviename=document.getElementById("pmoviename");
+    let upp=document.getElementById("updateposter");
+    upp.addEventListener("submit",async (e)=>{
+        e.preventDefault();
+        const upposter=pinput.value.trim();
+        const pmoviename=pomoviename.value.trim();
+        if(!upposter|| !pmoviename){
+            alert("Enter movie name");
+            return;
+        }
+        console.log(upposter);
+        console.log(pmoviename);
+        const obj={
+           pmoviename:pmoviename,
+            upposter:upposter
+        }
+        const presp=await fetch("http://localhost:3000/updatemovieposter",{
+            method:'PATCH',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                 
+                    body:JSON.stringify(obj)
+        })
+        const data=await presp.json();
+        if(data.status==200){
+            alert(data.message)
+        }else{
+            alert(data.message)
+        }
+
+    })
+
+</script>
+</body>
+</html>
