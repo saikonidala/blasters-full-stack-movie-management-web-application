@@ -36,7 +36,7 @@
             e.preventDefault();
             console.log(result1.value)
             value1=result1.value;
-            const resp=await fetch(`http://localhost:3000/search?movie=${encodeURIComponent(value1)}`)
+            const resp=await fetch(`https://movie-backend-bhjf.onrender.com?movie=${encodeURIComponent(value1)}`)
                  data=await resp.json();
                  console.log("type of data:",typeof data)
                 console.log("data recieved:",data)
