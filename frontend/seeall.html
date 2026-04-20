@@ -138,7 +138,7 @@ select{
     const output = document.querySelector(".result");
 
     try {
-      const resp = await fetch(`https://movie-backend-bhjf.onrender.com?genre=${encodeURIComponent(movies)}`);
+      const resp = await fetch(`https://movie-backend-bhjf.onrender.com/searchall?genre=${encodeURIComponent(movies)}`);
       const data = await resp.json();
 
       console.log("Data received:", data);
